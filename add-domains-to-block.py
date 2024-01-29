@@ -11,6 +11,8 @@ def getAlreadyBlockedDomains(bindBlackListFilePath):
   file = open(bindBlackListFilePath, 'r')
   for line in file:
     regexSubstring = re.findall(r'"([^"]*)"', line.lower())
+    if not regexSubstring:
+      continue
     domain = regexSubstring[0]
     bindBlackList.append(domain)
   file.close()

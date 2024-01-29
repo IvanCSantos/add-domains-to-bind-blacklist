@@ -32,6 +32,7 @@ def writeToBindBlacklist(domainListToBlock):
   for domain in domainListToBlock:
     file.write('zone \"{0}\" {{type master; file \"/etc/bind/blacklist/blockeddomains.db\";}};'.format(domain))
   file.close()
+  print("Added {} domains to blacklist".format(len(domainListToBlock)))
 
 alreadyBlockedDomainList = getAlreadyBlockedDomains(bindBlackListFilePath)
 domainListToBlock = readFromBlacklistFile(domainListToBlockFilePath, alreadyBlockedDomainList)

@@ -29,7 +29,8 @@ $TTL    3600
                 A       127.0.0.1
 *       IN      A       127.0.0.1
                 AAAA    ::1
-*       IN      AAAA    ::1```
+*       IN      AAAA    ::1
+```
 
 Add more domains to the blacklist by writing a file to `/tmp/blacklistdomains` with a list of domains, one domain by line:
 ```

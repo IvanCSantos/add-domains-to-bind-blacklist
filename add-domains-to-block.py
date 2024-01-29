@@ -2,12 +2,9 @@ import re
 
 # INPUTS
 # The file with a list of domains to add to blacklist
-domainListToBlockFilePath = '/tmp/blacklisteddomains'
+domainListToBlockFilePath = '/tmp/blacklistdomains'
 # The file in which all blocked domains are kept and read by Bind DNS Server
 bindBlackListFilePath = '/etc/bind/blacklist/blacklisted.zones'
-
-# LISTS
-domainListToBlock = list()
 
 def getAlreadyBlockedDomains(bindBlackListFilePath):
   bindBlackList = list()
@@ -20,11 +17,22 @@ def getAlreadyBlockedDomains(bindBlackListFilePath):
   return bindBlackList
 
 
-def readFromBlacklistFile(domainListFilePath):
+def readFromBlacklistFile(domainListFilePath, alreadyBlockedDomainList):
+  domainListToBlock = list()
   file = open(domainListFilePath, 'r')
   for line in file:
-    domain = line.lower()
-    domainListToBlock.append(domain)
+    domain = line.lower().rstrip()
+    if(domain not in alreadyBlockedDomainList):
+      domainListToBlock.append(domain)
+  file.close()
+  return domainListToBlock
+
+def writeToBindBlacklist(domainListToBlock):
+  file = open(bindBlackListFilePath, 'a')
+  for domain in domainListToBlock:
+    file.write('zone \"{0}\" {{type master; file \"/etc/bind/blacklist/blockeddomains.db\";}};'.format(domain))
   file.close()
 
-getAlreadyBlockedDomains(bindBlackListFilePath)
+alreadyBlockedDomainList = getAlreadyBlockedDomains(bindBlackListFilePath)
+domainListToBlock = readFromBlacklistFile(domainListToBlockFilePath, alreadyBlockedDomainList)
+writeToBindBlacklist(domainListToBlock)

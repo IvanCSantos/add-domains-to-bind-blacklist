@@ -8,7 +8,9 @@ You need to create a directory under Bind DNS Server named `blacklist`. This dir
  - blockeddomains.db
 
 The `blacklisted.zones` will keep a list of zones in which are blocked. The format for this file is the same way you define a domain in Bind:
-```zone "domainname.com" {type master; file "/etc/bind/blacklist/blockeddomains.db";}```
+```
+zone "domainname.com" {type master; file "/etc/bind/blacklist/blockeddomains.db";}
+```
 
 The blockeddomains.db will hold the domain data, which in this case defines the domains RR as 127.0.0.1 (the loopback address). The `blockeddomains.db` have the following content:
 ```;
@@ -39,4 +41,6 @@ domain2.com
 ```
 
 Then run this script which will read the `/tmp/blacklistdomains` and add the domains to the `blacklisted.zones` if they aren't already blocked.
-```python3 add-domains-to-bind-blacklist.py```
+```
+# python3 add-domains-to-bind-blacklist.py
+```

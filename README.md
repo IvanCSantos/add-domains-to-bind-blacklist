@@ -15,7 +15,7 @@ The blockeddomains.db will hold the domain data, which in this case defines the 
 ; BIND data file for example.local
 ;
 $TTL    3600
-@       IN      SOA     ns1.italine.com.br. suporte.italine.com.br. (
+@       IN      SOA     ns1.fqdn. suporte.fqdn. (
                             2023062601         ; Serial
                                   7200         ; Refresh
                                    120         ; Retry
@@ -23,8 +23,8 @@ $TTL    3600
                                   3600)        ; Default TTL
 ;
 
-@       IN      NS      ns1.italine.com.br.
-@       IN      NS      ns2.italine.com.br.
+@       IN      NS      ns1.fqdn.
+@       IN      NS      ns2.fqdn.
 
                 A       127.0.0.1
 *       IN      A       127.0.0.1

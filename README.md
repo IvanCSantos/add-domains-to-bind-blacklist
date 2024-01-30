@@ -38,5 +38,5 @@ domain1.com
 domain2.com
 ```
 
-Then run this script which will read the `/tmp/blacklistdomains` and add the domains to the `blacklisted.zones` if they aren't blocked.
+Then run this script which will read the `/tmp/blacklistdomains` and add the domains to the `blacklisted.zones` if they aren't already blocked.
 ```python3 add-domains-to-bind-blacklist.py```

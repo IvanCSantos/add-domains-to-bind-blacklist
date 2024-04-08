@@ -24,7 +24,9 @@ def readFromBlacklistFile(domainListFilePath, alreadyBlockedDomainList):
   file = open(domainListFilePath, 'r')
   for line in file:
     domain = line.lower().rstrip()
-    if(domain not in alreadyBlockedDomainList):
+    if not domain:
+      continue
+    if(domain not in alreadyBlockedDomainList and domain not in domainListToBlock):
       domainListToBlock.append(domain)
   file.close()
   return domainListToBlock

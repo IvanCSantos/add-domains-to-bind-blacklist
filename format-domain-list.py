@@ -2,8 +2,10 @@ import re
 import requests # pip3 install requests --break-system-packages
 
 # INPUTS
-# You usually will receive the domain list to block on a PDF file. Save it to a excel
-# file and clean undesired data that came from the PDF.
+# You usually will receive the domain list to block on a PDF file. Copy it to a excel
+# file and make sure all domains are in the same cell, then copy it to the domains.txt file.
+# Don't mind with empty lines or undesired data (eg. pdf pagination or table headers) in the file as this
+# script will try to clean it all.
 
 # The file with a list of domains unformated (eg. many domains on the same line, 
 # or Texts that aren't domains - don't have a dot ".")

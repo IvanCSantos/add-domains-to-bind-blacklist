@@ -44,3 +44,12 @@ Then run this script which will read the `/tmp/blacklistdomains` and add the dom
 ```
 # python3 add-domains-to-bind-blacklist.py
 ```
+
+# Helper script to generate the domain list
+Since you will often receive the list of domains in a table in a PDF file (omg!), use the `format-domain-list.py` helper script to help you generate the list of domains (`domainsToBlock.txt`).
+To do this, simply copy the table with domain data from the PDF file to a text file (`domains.txt`). Don't worry about removing headers, pagination data, blank lines, putting each domain on new line, etc. as the script will only search for domains even if there are multiple on the same line. Just make sure you copied everything from the PDF table (you may want to copy it to an excel spreadsheet before copying to the `domains.txt` file in order to visualize better what you got).
+## Then run the format-domain-list.py script and the output of this script is the domainsToBlock.txt file:
+The script will read the input file `domains.txt` with a list of domains + garbage and will output `domainsToBlock.txt` with one domain per line. This last file you will use with the `add-domains-to-block.py`, so copy this data to the `/tmp/blacklistdomains` mentioned earlier.
+```
+python3 format-domain-list.py
+```

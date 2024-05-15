@@ -47,12 +47,16 @@ def backupOriginalFile(src):
   shutil.copyfile(src, '/etc/bind/blacklist/blacklisted.zones.bak1')
 
 def writeToBindBlacklist(domainListToBlock):
-  backupOriginalFile(bindBlackListFilePath)
-  file = open(bindBlackListFilePath, 'a')
-  for domain in domainListToBlock:
-    file.write('zone \"{0}\" {{type master; file \"/etc/bind/blacklist/blockeddomains.db\";}};\n'.format(domain))
-  file.close()
-  print("Added {} domains to blacklist".format(len(domainListToBlock)))
+  if(len(domainListToBlock) > 0):
+    backupOriginalFile(bindBlackListFilePath)
+    file = open(bindBlackListFilePath, 'a')
+    for domain in domainListToBlock:
+      file.write('zone \"{0}\" {{type master; file \"/etc/bind/blacklist/blockeddomains.db\";}};\n'.format(domain))
+    file.close()
+    print("Added {} domains to blacklist".format(len(domainListToBlock)))
+  else:
+    print("All domains already blocked. Nothing to do here")
+
 
 alreadyBlockedDomainList = getAlreadyBlockedDomains(bindBlackListFilePath)
 domainListToBlock = readFromBlacklistFile(domainListToBlockFilePath, alreadyBlockedDomainList)

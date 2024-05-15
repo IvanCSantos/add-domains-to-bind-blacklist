@@ -46,6 +46,11 @@ def returnOnlyValidDomains(fileWithStringsToTest):
         for word in line.split(" "):
             # Remove "/" from the string
             word = word.split("/")[0]
+            # Checks if it is an e-mail address instead of a domain (e-mail address on footer of the document)
+            atFound = re.findall(r'\@', word)
+            if atFound:
+                print("E-mail found: {}".format(word))
+                continue
             # Checks if the word has a dot "." in the mid (ignoring the possibility of the word 
             # ending with dot to avoid the paginator being considered a domain (pg.)). All domains should(?).
             dotFound = re.findall(r'\.', word[:-1].lower())
@@ -59,6 +64,8 @@ def returnOnlyValidDomains(fileWithStringsToTest):
             # Checks if the word ends with one of the TLD (Top Level Domains). All domains should.
             if not testValidDomain(domain):
                 continue
+
+
             # if it is a domain, add to a validated domain list
             domainList.append(domain)
     return domainList

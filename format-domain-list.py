@@ -49,7 +49,7 @@ def returnOnlyValidDomains(fileWithStringsToTest):
             # Checks if it is an e-mail address instead of a domain (e-mail address on footer of the document)
             atFound = re.findall(r'\@', word)
             if atFound:
-                print("E-mail found: {}".format(word))
+                #print("E-mail found: {}".format(word))
                 continue
             # Checks if the word has a dot "." in the mid (ignoring the possibility of the word 
             # ending with dot to avoid the paginator being considered a domain (pg.)). All domains should(?).

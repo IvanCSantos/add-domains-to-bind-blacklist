@@ -33,22 +33,18 @@ def readFromBlacklistFile(domainListFilePath, alreadyBlockedDomainList):
   file.close()
   return domainListToBlock
 
-# Creates backup copy of previous 3 versions of /etc/bind/blacklist/blacklisted.zones
-def backupOriginalFile(src):
-  if(os.path.isfile('/etc/bind/blacklist/blacklisted.zones.bak3')):
-    os.remove('/etc/bind/blacklist/blacklisted.zones.bak3')
-  
-  if(os.path.isfile('/etc/bind/blacklist/blacklisted.zones.bak2')):
-    shutil.move('/etc/bind/blacklist/blacklisted.zones.bak2', '/etc/bind/blacklist/blacklisted.zones.bak3')
-  
-  if(os.path.isfile('/etc/bind/blacklist/blacklisted.zones.bak1')):
-    shutil.move('/etc/bind/blacklist/blacklisted.zones.bak1', '/etc/bind/blacklist/blacklisted.zones.bak2')
-
-  shutil.copyfile(src, '/etc/bind/blacklist/blacklisted.zones.bak1')
+# Creates backup copy of previous X versions of /etc/bind/blacklist/blacklisted.zones
+def backupOriginalFile(src, qty=10):
+  if(os.path.isfile(src + ".bak" + str(qty))):
+    os.remove(src + ".bak" + qty)
+  for i in range(qty, 1, -1):
+    if(os.path.isfile(src + ".bak" + str(i-1))):
+      shutil.move(src + ".bak" + str(i-1), src + ".bak" + str(i))
+  shutil.copyfile(src, src + ".bak1")
 
 def writeToBindBlacklist(domainListToBlock):
   if(len(domainListToBlock) > 0):
-    backupOriginalFile(bindBlackListFilePath)
+    backupOriginalFile(bindBlackListFilePath, 50)
     file = open(bindBlackListFilePath, 'a')
     for domain in domainListToBlock:
       file.write('zone \"{0}\" {{type master; file \"/etc/bind/blacklist/blockeddomains.db\";}};\n'.format(domain))
